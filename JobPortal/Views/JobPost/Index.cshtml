@@ -1,0 +1,78 @@
+﻿@model IEnumerable<JobPortal.Models.JobPost>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>Manage Job</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MinExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinSal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaxSal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfVac)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoticePeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsertedDate)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinExp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxExp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinSal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxSal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfVac)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoticePeriod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsertedDate)
+                </td>
+                <td>
+                    <a asp-action="Create" asp-route-id="@item.JobPostId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.JobPostId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,21 @@
+﻿@*For creating partial view select Create as a partial view check box*@
+@*Jitne bhi related data hote hain unhein ham partial view page me rakh lete hai or partial page ke data ko ham log show karate hai in multiple pages for saving code repeateation*@
+@if (TempData["success"] != null)//if our TempData not null then show on top in heading
+{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    //here we paste our toastr alert js file with js file that's available in wwwroot,s lib folder
+    <script>
+        toastr.success('@TempData["success"]');
+    </script>
+    <h2>@TempData["success"]</h2>//toastr and without toastr both works fine
+}
+@if (TempData["error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>    
+    <script>
+        toastr.error('@TempData["error"]');
+    </script>
+    <h2>@TempData["error"]</h2>
+}

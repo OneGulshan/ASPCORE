@@ -1,0 +1,49 @@
+﻿@model ASPCORE.Models.Course
+
+<div>
+    @ViewData["Title"]
+</div>
+
+@{ //Code Block
+    //var course = ViewData["course"] as GettingStarted.Models.Course;
+    var course = ViewBag.courseView as ASPCORE.Models.Course;
+}
+
+<div>
+    @course.Title
+</div>
+
+<div>
+    @course.Code
+</div>
+
+<h1>Details</h1>
+
+@*<div>
+           <h4>Course</h4>
+           <hr />
+           <dl class="row">
+        <dt class="col-sm-2">
+               @Html.DisplayNameFor(model => model.Id) @*DisplayNameFor:- For Name of Properties
+            </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Id) @*DisplayFor:- For Data of Properties
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Title)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Title)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Code)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Code)
+    </dd>
+            </dl>
+        </div>*@
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

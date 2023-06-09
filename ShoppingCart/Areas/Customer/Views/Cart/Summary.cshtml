@@ -1,0 +1,106 @@
+﻿@model Models.ViewModels.CartVM
+@*yahan hamne apne stripe service ko add kia hai, using microsoft extensions*@
+@using Microsoft.Extensions.Options
+@inject IOptions<CommonHelper.StripeSettings> Strip
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-8 mb-4">
+            <div class="cart mb-4">
+                <div class="card-header py-3">
+                    <h5 class="mb-0">Shipping details</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <!-- 2 colums grid layout with text inputs for the first and last names -->
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="form-outline">
+                                    <input type="text" asp-for="@Model.OrderHeader.Name" class="form-control" />
+                                    <label class="form-label" for="form7Example1">Name</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Number input -->
+                        <div class="form-outline mb-4">
+                            <input type="number" asp-for="@Model.OrderHeader.Phone" class="form-control" />
+                            <label class="form-label" for="form7Example2">Phone</label>
+                        </div>
+
+                        <!-- Address input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="@Model.OrderHeader.Address" class="form-control" />
+                            <label class="form-label" for="form7Example3">Address</label>
+                        </div>
+
+                        <!-- City input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="@Model.OrderHeader.City" class="form-control" />
+                            <label class="form-label" for="form7Example4">City</label>
+                        </div>
+
+                        <!-- State input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="@Model.OrderHeader.State" class="form-control" />
+                            <label class="form-label" for="form7Example5">State</label>
+                        </div>
+
+                        <!-- PostalCode input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" asp-for="@Model.OrderHeader.PostalCode" class="form-control" />
+                            <label class="form-label" for="form7Example6">PostalCode</label>
+                        </div>
+
+                        <!-- Checkbox --><!-- Hamne Authorize attribute use kia hai isliye hamne Checkbox ko hata liya hai -->
+                        @*<div class="form-check d-flex justify-content-center mb-2">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="form7Example7"
+                        checked />
+                        <label class="form-check-label" asp-area="Customer">
+                        Create an account?
+                        </label>
+                        </div>*@
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h5 class="mb-0">Summary</h5>
+                </div>@*hamara cart repetition me hoga 1 by one product ki info change hogi to foreach loop ke throw ham apni product information ko render karenge*@
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var details in @Model.ListOfCart)
+                        {//is loop se hamein pata chalega ki kitna item hamne add kia or delete kia hai
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center border-3">
+                                <span>@details.Product.Name</span>
+                                <span>QTY: @details.Count</span>
+                                <span>@(((details.Product.Price)*(details.Count)).ToString("c"))</span>@*yaha hamein ToString use karne ke liye extra bracket ki requirement padi*@
+                            </li>
+                        }
+                        <li class="list-group-item d-flex justify-content-between align-items-center border-3">
+                            <div>
+                                <strong>Total amount</strong>
+                                <strong>
+                                    <p class="mb-0">(including VAT)</p>
+                                </strong>
+                            </div>
+                            <span><strong>@Model.OrderHeader.OrderTotal.ToString("c")</strong></span>
+                        </li>
+                    </ul>
+
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        Make Purchase
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@*We heave two things in Order 1 Order Header, 2 Order Detail, In Order Header we chk our status, address, payment, date etc., Order Detail me hamare pass Order Status, Order header id aa jaegi*@
+
+@*What is interactive content in HTML?
+  HTML Hypertext is: a text that is interactive with its hyperlinks (hypertext links) Hypertext means text with links in it., html is the user interactive part in WebSite*@

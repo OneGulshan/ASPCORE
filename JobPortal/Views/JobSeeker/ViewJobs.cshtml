@@ -1,0 +1,104 @@
+﻿@model IEnumerable<JobPortal.ViewModels.JobsViewJobSeekerViewModel>
+
+@{
+    ViewData["Title"] = "ViewJobs";
+}
+
+<h1>ViewJobs</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                CompanyName
+            </th>
+            <th>
+                JobProfile
+            </th>
+            <th>
+                RequiredExperience
+            </th>
+            <th>
+                OfferedSalary
+            </th>
+            <th>
+                NumberOfVacancies
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoticePeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsertedDate)
+            </th>
+            <th>
+                Apply
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JPName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinExp)<text> Year</text> - @Html.DisplayFor(modelItem => item.MaxExp)<text> Year</text>
+                </td>
+                <td>
+                    <text>Rs. </text>@Html.DisplayFor(modelItem => item.MinSal) - @Html.DisplayFor(modelItem => item.MaxSal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfVac)<text> vacancies</text>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoticePeriod)<text> days</text>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsertedDate)
+                </td>
+                <td>
+                    <a href="javascript:void(0);" onclick="SentMail(@item.CompanyId)">Apply</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}    
+
+    <script type="text/javascript">
+        debugger;
+        function SentMail(CompanyId) {
+            document.getElementById('iframe_pop').src = '@Url.Action("MailSent", "JobSeeker")?CompanyId=' + CompanyId; /*Jaise hi ye func call ho iframe_pop nam ke popup me Applyform_JS nam ka page call ho jae or query string me rakh kar rid chali jae ApplyForm_Js par ab ye dekhna hai ki hamara ApplyForm_Js page iframe_pop nam ke popup me kaise khulega*/
+            $('#div_overlay').fadeIn(500); $('#div_popup').fadeIn(500);
+        }
+    </script>
+
+    @*------------------Popip apply------------------*@
+    <div id="div_overlay" style="position: fixed; left: 0px; top: 0px; right: 0px; bottom: 0px; background: black; opacity: 0.2; display: none"></div>
+
+    <div id="div_popup" style="position: fixed; left: 0px; top:150px; right: 0px; bottom: 0px; display: none; top: 150px; right: 0px; bottom: 0px">
+
+        <center>
+            <div style="overflow:auto;width:500px;height:300px;background:white">
+                <div style="float:right"><a href="javascript:void(0);" onclick="$('#div_overlay').fadeOut(1000);$('#div_popup').fadeOut(1000);">Close</a></div>
+                <iframe id="iframe_pop" src="@Url.Action("MailSent", "JobSeeker")" style="border:none" width="500px" height="300px"></iframe>
+            </div>
+        </center>
+    </div>
+
+}

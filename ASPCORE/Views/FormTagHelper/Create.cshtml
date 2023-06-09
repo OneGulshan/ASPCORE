@@ -1,0 +1,22 @@
+﻿@*@model GettingStarted2.Models.Employee*@
+@model Employee
+@{ 
+    ViewData["Title"] = "Create";
+}
+
+<form asp-controller="FormTagHelper" asp-action="Create" method="Post">
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>    
+
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+    </div>
+
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+</form>

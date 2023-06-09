@@ -1,0 +1,73 @@
+﻿@model JobPortal.Models.JobPost
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>JobPost</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.HiddenFor(m=>m.JobPostId)
+            </div>
+            <div class="form-group">
+                <level class="control-label">JobProfile :-</level>&nbsp;&nbsp;&nbsp;&nbsp;
+                <select asp-for="JobProfileId" id="JobPostList" asp-items="@ViewBag.JopProfile">
+                    <option value="-1"> --Select JopProfile-- </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinExp" class="control-label"></label>
+                <input asp-for="MinExp" class="form-control" />
+                <span asp-validation-for="MinExp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxExp" class="control-label"></label>
+                <input asp-for="MaxExp" class="form-control" />
+                <span asp-validation-for="MaxExp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinSal" class="control-label"></label>
+                <input asp-for="MinSal" class="form-control" />
+                <span asp-validation-for="MinSal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxSal" class="control-label"></label>
+                <input asp-for="MaxSal" class="form-control" />
+                <span asp-validation-for="MaxSal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoOfVac" class="control-label"></label>
+                <input asp-for="NoOfVac" class="form-control" />
+                <span asp-validation-for="NoOfVac" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoticePeriod" class="control-label"></label>
+                <input asp-for="NoticePeriod" class="form-control" />
+                <span asp-validation-for="NoticePeriod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InsertedDate" class="control-label"></label>
+                <input asp-for="InsertedDate" class="form-control" />
+                <span asp-validation-for="InsertedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@ViewBag.BT" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

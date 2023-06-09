@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "TestCascading Page";
+}
+<select id="CountryList" asp-items="@ViewBag.countries">
+    <option value="-1">Select Country</option>
+</select>
+<select id="StateList">
+</select>
+@section scripts{
+    <script>
+    $(document).ready(function () {
+        $("#CountryList").on("change", function () {//on is for multiple events firing and change its even if any changing at then anonymous func auto fire and then called this ajax func
+
+            $.ajax({
+                type: "Post",
+                url: "../TestCascading/GetState",
+                data: { "CountryId": $("#CountryList").val() },
+                success: function (response) {
+                    var items = '';
+                    $(response).each(function () {
+                        items += "<option value=" +this.value + ">" + this.text + "</option>";
+                    })
+                    $("#StateList").html(items);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        })
+    });
+
+    </script>
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

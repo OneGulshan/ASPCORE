@@ -1,0 +1,192 @@
+﻿@model JobPortal.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.EId)
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <level class="control-label">Gender :-</level>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                @foreach (var item in Html.GetEnumSelectList<Gender>())
+                {
+                    <input class="radio-inline" type="radio" asp-for="Gender" value="@item.Text" />
+                    @item.Text
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                }
+            </div>
+            <div class="form-group">
+                <level class="control-label">JobProfile :-</level>&nbsp;&nbsp;&nbsp;&nbsp;@* style="font-weight:bold;height:40px" *@
+                <select asp-for="JobProfileId" id="JobProfileList" asp-items="@ViewBag.JobProfile">
+                    <option value="-1"> --Select JobProfiles-- </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <level class="control-label">Skills :-</level>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select asp-for="SkillsId" id="SkillsList" asp-items="@ViewBag.Skills">
+                    <option value="-1"> --Select Skills-- </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobno" class="control-label"></label>
+                <input asp-for="Mobno" class="form-control" />
+                <span asp-validation-for="Mobno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <level class="control-label">Country :-</level>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select asp-for="CountryId" id="CountryList" asp-items="@ViewBag.Country">
+                    <option value="-1"> --Select Country-- </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <level class="control-label">State :-</level>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select asp-for="StateId" id="StatesList" asp-items="@ViewBag.State" >
+                    <option value="-1"> --Select State-- </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <level class="control-label">City :-</level>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <select asp-for="CityId" id="CitiesList" asp-items="@ViewBag.City">
+                    <option value="-1"> --Select City-- </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImageFile" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <textarea asp-for="Comment" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@ViewBag.BT" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#CountryList").on("change", function () {
+                $('#StatesList').empty();
+                $('#StatesList').append('<option value=' + 0 + ' >' + ' --Select States-- ' + '</option >');
+                
+                if ($('#CountryList' == -1)) {
+                    $('#CitiesList').empty();
+                    $('#CitiesList').append('<option value=' + 0 + ' >' + ' --Select City-- ' + '</option >');
+                }                
+
+                $.ajax({
+                    type: "Post",
+                    url: "/JobSeeker/GetStates",
+                    data: { "CId": $('#CountryList :selected').val() },
+                    success: function (response) {
+                        var items = '';
+                        items += "<option value=" + 0 + " > " + " --Select States--";
+                        $(response).each(function (response) {
+                            items += "<option value=" + this.value + ">" + this.text + "</option>";
+                        })
+                        $("#StatesList").html(items);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            })
+
+            $("#StatesList").on("change", function () {
+
+                $('#CitiesList').empty();
+                $('#CitiesList').append('<option value=' + 0 + ' >' + ' --Select City-- ' + '</option >');
+
+                $.ajax({
+                    type: "Post",
+                    url: "/JobSeeker/GetCity",
+                    data: { "StateId": $('#StatesList :selected').val() },
+                    success: function (response) {
+                        var items = '';
+                        items += "<option value=" + 0 + " > " + " --Select City--";
+                        $(response).each(function (response) {
+                            items += "<option value=" + this.value + ">" + this.text + "</option>";
+                        })
+                        $("#CitiesList").html(items);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            })
+
+            $("#JobProfileList").on("change", function () {
+
+                $('#SkillsList').empty();
+                $('#SkillsList').append('<option value=' + 0 + ' >' + ' --Select Skills-- ' + '</option >');
+
+                $.ajax({
+                    type: "Post",
+                    url: "/JobSeeker/GetSkills",
+                    data: { "JPId": $('#JobProfileList :selected').val() },
+                    success: function (response) {
+                        var items = '';
+                        items += "<option value=" + 0 + " > " + " --Select Skills--";
+                        $(response).each(function (response) {
+                            items += "<option value=" + this.value + ">" + this.text + "</option>";
+                        })
+                        $("#SkillsList").html(items);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            })
+        });
+
+    </script>
+}
+

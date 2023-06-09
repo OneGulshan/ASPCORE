@@ -1,0 +1,64 @@
+﻿@model IEnumerable<JobPortal.Models.JobPost>
+
+@{
+    ViewData["Title"] = "ManageJobPost";
+}
+
+
+<h1>ManageJobPost</h1><br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Required Experience
+            </th>
+            <th>
+                Offered salary
+            </th>
+            <th>
+                Number of vacancies
+            </th>
+            <th>
+                Notice Period
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinExp)<text> Year</text> - @Html.DisplayFor(modelItem => item.MaxExp)<text> Year</text>
+                </td>
+                <td>
+                    <text>Rs. </text>@Html.DisplayFor(modelItem => item.MinSal) - @Html.DisplayFor(modelItem => item.MaxSal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoOfVac)<text> vacancies</text>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoticePeriod)<text> days</text>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    <a asp-action="ApproveJobPost" asp-route-id="@item.JobPostId">@(item.Status == true ? "Approved" : "Not Approved")</a>
+                </td>
+                <td>
+                    <a asp-action="DeleteJobPost" asp-route-id="@item.JobPostId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

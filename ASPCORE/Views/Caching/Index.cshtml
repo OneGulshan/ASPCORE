@@ -1,0 +1,9 @@
+﻿@model DateTime?
+<div>
+    Current Time:
+    @DateTime.Now.ToString();
+</div>
+<div>
+    Cached Time:
+    @Model.Value.ToString();
+</div>

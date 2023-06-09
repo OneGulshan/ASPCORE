@@ -1,0 +1,77 @@
+﻿@model Models.ViewModels.ProductVM
+
+<form method="post" asp-action="CreateUpdate" enctype="multipart/form-data">@*Image hamare pass multipart data ka form hai isliye hamein iske liye ek enctype add karna hoga*@
+    <input type="hidden" asp-for="Product.Id" />
+    <input type="hidden" asp-for="Product.ImageUrl" />@*old image ka url get karna padega hame yahan olde image ko hatane ke liye*@
+    <div class="border p-3 mt-4">
+        <div class="row pb-3">
+            <h2 class="text-primary">@((Model.Product==null || Model.Product.Id==0) ?"Create":"Update") Product</h2>
+            <hr/>
+        </div>
+        <div asp-validation-summary=All></div>
+        <div class="row mb-3">
+            <label asp-for="Product.Name"></label>
+            <input asp-for="Product.Name" class="form-control" />
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.Description"></label>
+            <textarea asp-for="Product.Description" class="form-control"></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.Price"></label>
+            <input asp-for="Product.Price" class="form-control" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.CategoryId"></label>@*by using this navigate foreign key CategoryId our Category is binded here in ddl*@
+            <select asp-for="Product.CategoryId" asp-items="Model.Categories" class="form-control">
+                <option selected disabled>--Select Category--</option>
+            </select>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.ImageUrl"></label>
+            <input type="file" id="ImageFile" name="file" class="form-select" />@*Image ke liye controller banane ke liye type="file" hota hai hamare pass, and name="file" is also req*@
+        </div>
+        @if(Model.Product==null || Model.Product.Id==0)
+        {
+            <button class="btn btn-primary" onclick="return ValidateEmpty()" type="submit">Create</button>@*If our image is null then we show a msg of ValidateEmpty*@
+        }
+        else
+        {
+            <button class="btn btn-primary" type="submit">Update</button>
+        }        
+    </div>
+    <a asp-action="Index" asp-controller="product">Back to List</a>
+</form>
+
+@section scripts{
+    @{
+    <partial name="_ValidationScriptsPartial"/>
+    }@*Steps of using sweet alert -> https:// sweetalert2.github.io/#usage ->Menu -> DOWNLOAD & INSTALL -> cdn file copy & paste in Layout js section-> Menu -> Examples -> copy opps msg and paste over here with make changes also here*@
+    <script>@*here we use sweet alert for our image, this is a js plugin*@
+    
+    
+    tinymce.init({//tinymce is directly  worked in cshtml does,nt req to go in controller
+      selector: 'textarea',
+      plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+      toolbar_mode: 'floating'      
+    });
+
+    function ValidateEmpty()// this is a js function its name of ValidateEmpty
+    {
+        if (document.getElementById("ImageFile").value == "")
+        {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Upload Image!'
+            });
+            return false;// if ImageFile is null then return false jate hi popup show ho jaega
+        }
+        return true;// else true
+    }
+    </script>
+}

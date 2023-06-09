@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row pb-4">@*pb-4 <- padding bottom se 4 hamne chod di hai*@
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 18rem;">@*this is a bootstrap card after this we can use also a professional cart*@
+            <img class="card-img-top" src="@item.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">Price: @item.Price.ToString("0.00")</p>
+                <a asp-action="Details" asp-controller="Home" asp-route-ProductId="@item.Id" class="btn btn-primary">Details</a> @*asp-route-id="@item.Id" <- url me route id/query string ke throw id bhejne ke liye*@
+            </div>
+        </div>
+    }
+</div>

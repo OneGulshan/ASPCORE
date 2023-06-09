@@ -1,0 +1,30 @@
+﻿@model Category
+
+<form method="post">@*Category ke Create ka get hamne yahan bhej dia ab ham yahan use post karenge*@
+    <div class="border p-3 mt-4">@*peding means space from your text to control & margin means space from control to control*@
+        <div class="row pb-3">
+            <h2 class="text-primary">Category</h2>
+            <hr/>
+        </div>
+        <div asp-validation-summary=ModelOnly></div>@*Sabhi error msg's top of the screen show karane ke liye*@
+        <div class="row mb-3">
+            <label asp-for="Name"></label>@*asp-for <- is a tag helper jo html ke liye id and name prop dono banata hai by same name so we write Name for both label and input control*@
+            <input asp-for="Name" class="form-control" />@*input means textbox control*@
+            <span asp-validation-for="Name" class="text-danger"></span>@*Server Side Validation ke error msg's show karane ke liye asp-validation-for tag helper hai*@
+        </div>
+        <div class="row mb-3">
+            <label asp-for="DisplayOrder"></label>
+            <input asp-for="DisplayOrder" class="form-control" />
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>@*submit type ka btn post method ko call karta hai isliye hamne apna form post type ka banaya hai*@
+    </div>
+    <a asp-action="Index" asp-controller="category">Back to List</a>
+</form>
+@*In Server Side Validation request goes to Server but in Client side not goes so our page does,nt refresh*@
+
+@section scripts{
+    @{//@ <- with the use of verbetim literal we use our code section(cs section)
+        <partial name="_ValidationScriptsPartial"/>@*this _ValidationScriptsPartial file we use for Client side validation <- is file ke throw hamari client side validatin automatically call ho jaegi*@
+    }
+}

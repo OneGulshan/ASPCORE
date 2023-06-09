@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ASPCORE.Models.Course>
+@{
+    ViewData["Title"] = "_index";
+}
+
+@*<h1>_index</h1>
+    <div>full details about page</div>*@
+
+@foreach (var item in Model)
+{
+    <div>
+        @item.Id
+    </div>
+    <div>
+        @item.Title
+    </div>
+    <div>
+        @item.Code
+    </div>
+}

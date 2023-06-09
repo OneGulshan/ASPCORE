@@ -1,0 +1,9 @@
+﻿@model IEnumerable<ASPCORE.Models.Course>
+@{ 
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@*<partial name="_index" />*@
+@await Html.PartialAsync("_index", Model)

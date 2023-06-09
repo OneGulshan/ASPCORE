@@ -1,0 +1,11 @@
+﻿@model Course
+@{ 
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<form>
+    @*<select asp-for="Id" asp-items="@Html.GetEnumSelectList<CourseType>()">*@ @*For using Id prop of Course*@
+        <select asp-for="Id" asp-items="ViewBag.CourseList">
+        </select>
+</form>

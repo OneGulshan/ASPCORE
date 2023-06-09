@@ -1,0 +1,51 @@
+﻿@model Models.ViewModels.CategoryVM//feki hui categories hold karne ke liye
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container p-4">
+    <div class="row p-3">
+        <div class="col-6">
+            <h2 class="text-primary">List of Categories</h2>
+        </div>
+        <div class="col-6 text-end">@*text-end for showing text on right side*@
+            <a class="btn btn-primary" asp-action="CreateUpdate" asp-controller="Category"><i class="bi bi-plus-circle"></i>&nbsp;Create New Category</a>@*this is a ancher bootstrap btn with icon*@
+        </div>
+    </div>
+</div>
+
+<table class="table table-boarder table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Category Name
+            </th>
+            <th>
+                Display Order
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.categories)
+        {
+            <tr>@*tr repeated here*@
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.DisplayOrder
+                </td>
+                <td role="group">@*A set of user interface objects which are not intended to be included in a page summary or table of contents by assistive technologies.*@
+                    <a asp-action="CreateUpdate" asp-controller="category" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                    <a asp-action="Delete" asp-controller="category" asp-route-id="@item.Id"><i class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*core me cshtml file ko aise dezine kia jata hai takki ham code & html file dono ek sath kaam me le len using verbitim literal*@
+@*Bootstrap icons adding steps ->https://icons.getbootstrap.com/ ->copy cdn(<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">) and paste in Layout -> search icon -> open icon copy icon font and paste in our project*@
+@*G:\#ALL DATA\#Technology Keeda Channel all videos\Technology Keeda ASP.Net Core 6.0*@
